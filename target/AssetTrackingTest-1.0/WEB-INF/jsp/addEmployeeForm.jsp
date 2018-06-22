@@ -8,6 +8,8 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Add Employee</title>
 	</head>
+		
+	<body>
 		<h1>Add Employee Form</h1>
 		
 		<form:form action="addEmployee" method="post" modelAttribute="employee">
@@ -31,7 +33,5 @@
 				
 			</table>
 		</form:form>
-	<body>
-
 	</body>
 </html>

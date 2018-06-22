@@ -165,29 +165,29 @@ public class AssetDAO {
 		query             = "insert into Loan values (?,?,?,?)";
 		String checkEmp   = "select * from Loan where EmployeeID = ?";
 		String checkAsset = "select * from Loan where AssetID = ?";
-		System.out.println("HERE1!!");
+		System.out.println(loan.getEmployeeID());
+		System.out.println(loan.getAssetID());
+		
 		//int count = jdbcTemplate.queryForObject(checkEmp, new Object[] {loan.getEmployeeID()}, Integer.class );
 		boolean flag = false;
 		//atempt a query, if it doesn't work the employee doesn't have a loan out (I think...)
 		try{
 			jdbcTemplate.queryForObject(checkEmp, Integer.class, loan.getEmployeeID());
+			System.out.println("HERE1!!");
 		}catch(EmptyResultDataAccessException e) {flag = true;}
 		
 		//if the employee doesn't have an active loan
 		if(flag) {
 			try {
 				//check if the asset has an active loan and if it doesn't then great... 
-				System.out.println("HERE2!!");
 				jdbcTemplate.queryForObject(checkAsset,new Object[] {loan.getAssetID()}, Integer.class);
-				System.out.println("HERE3!!");
+				System.out.println("HERE2!!");
 				flag = false;
 			}catch(EmptyResultDataAccessException e) {/*we don't need to do anything here}*/}		
 		}
 		//...add it to the DB
 		if(flag) {
-			System.out.println("HERE4!!");
 			jdbcTemplate.update(query, new Object[]{loan.getEmployeeID(),loan.getAssetID(),loan.getStartDate(), loan.getEndDate()});
-			System.out.println("HERE5!!");
 		}
 		return flag;
 		

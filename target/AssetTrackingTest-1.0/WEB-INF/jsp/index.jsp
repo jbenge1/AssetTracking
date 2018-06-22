@@ -17,6 +17,10 @@
         </div>
         <div id="UpdateDB">
         	<a href="EmployeeAddForm">Add Employee</a>
+        	<a href="LoanAddForm">Add Loan</a>
+        </div>
+        <div id="DeleteLoans">
+        	<a href="LoanDelForm">Remove Loan</a>
         </div>
     </body>
     
