@@ -158,38 +158,37 @@ public class AssetDAO {
 	 * First check if the incoming employee id already exists in the Loan table
 	 * if not, then go on to check if the asset id already exists. if not then
 	 * insert the loan into the table!!
+	 * 
+	 * (Maybe I should think about returning a string that corresponds to a specific 
+	 * error page depending on where I get the error,)
 	 * @param loan
 	 * 		the loan to insert into the DB
 	 */
 	public boolean addLoan(Loan loan) {
 		query             = "insert into Loan values (?,?,?,?)";
-		String checkEmp   = "select * from Loan where EmployeeID = ?";
-		String checkAsset = "select * from Loan where AssetID = ?";
-		System.out.println(loan.getEmployeeID());
-		System.out.println(loan.getAssetID());
+		String checkEmp   = "select count(*) from Loan where EmployeeID = ?";
+		String checkAsset = "select count(*) from Loan where AssetID = ?";
 		
-		//int count = jdbcTemplate.queryForObject(checkEmp, new Object[] {loan.getEmployeeID()}, Integer.class );
-		boolean flag = false;
-		//atempt a query, if it doesn't work the employee doesn't have a loan out (I think...)
-		try{
-			jdbcTemplate.queryForObject(checkEmp, Integer.class, loan.getEmployeeID());
-			System.out.println("HERE1!!");
-		}catch(EmptyResultDataAccessException e) {flag = true;}
+		int count = jdbcTemplate.queryForObject("select count(*) from Employee where ID = ?",
+				new Object[] {loan.getEmployeeID()}, Integer.class);
+		if(count != 1)
+			return false;
 		
-		//if the employee doesn't have an active loan
-		if(flag) {
-			try {
-				//check if the asset has an active loan and if it doesn't then great... 
-				jdbcTemplate.queryForObject(checkAsset,new Object[] {loan.getAssetID()}, Integer.class);
-				System.out.println("HERE2!!");
-				flag = false;
-			}catch(EmptyResultDataAccessException e) {/*we don't need to do anything here}*/}		
-		}
-		//...add it to the DB
-		if(flag) {
-			jdbcTemplate.update(query, new Object[]{loan.getEmployeeID(),loan.getAssetID(),loan.getStartDate(), loan.getEndDate()});
-		}
-		return flag;
+		count = jdbcTemplate.queryForObject("select count(*) from Asset where ID = ?", 
+				new Object[] {loan.getAssetID()}, Integer.class);
+		if(count != 1)
+			return false;
+	    //=== Check to see if the record already exists
+		count = jdbcTemplate.queryForObject(checkEmp, new Object[] {loan.getEmployeeID()}, Integer.class);
+		if(count != 0)
+			return false;
+		count = jdbcTemplate.queryForObject(checkAsset,new Object[] {loan.getAssetID()}, Integer.class);
+		if(count != 0)
+			return false;
+		//=============================================
+		jdbcTemplate.update(query, new Object[]{loan.getEmployeeID(),loan.getAssetID(),loan.getStartDate(), loan.getEndDate()});
+		
+		return true;
 		
 	}//end addLoan()
 	

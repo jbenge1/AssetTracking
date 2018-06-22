@@ -8,7 +8,8 @@
 </head>
 <body>
 	<div>
-		you are seeing this page because adding an employee didn't work :( 
+        <h1>	you are seeing this page because adding an employee didn't work :( </h1>
+        but its good that we're seeing this :) 
 	</div>
 </body>
 </html>
