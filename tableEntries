@@ -1,0 +1,25 @@
+Database Entries
+
+Asset:
+    Vendor
+    Serial #
+    Aquistion Date
+    Disposal Date
+    State (broken/working)
+    Notes
+    In use
+
+
+
+
+Employee (who owns the computer)
+    First name
+    Last name
+    Email
+    ID
+    Has asset
+
+Find out how spring can manage jdbc connections 
+    -With much searching and deadends I think I've got it...
+Make sure the asset doesn't have an active loan
+Make sure the employee doesn't already have an active loan
