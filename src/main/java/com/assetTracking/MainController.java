@@ -89,10 +89,10 @@ public class MainController {
     
     @PostMapping("addLoan")
     public ModelAndView addLoan(@ModelAttribute("loan") Loan loan, Model model) {
-    	boolean flag = assetDAO.addLoan(loan);
+    	String flag = assetDAO.addLoan(loan);
     	
-    	if(!flag)
-    		return new ModelAndView("errorAddLoan", "", null);
+    	if(!flag.equals("loanList"))
+    		return new ModelAndView(flag, "", null);
     	List<Loan> list = new ArrayList<>();
     	list = assetDAO.getAllLoanRecords();
     	return new ModelAndView("loanList", "loan", list);

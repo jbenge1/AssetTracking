@@ -10,6 +10,10 @@
 	<body>
 		<h1>Remove Loan</h1>
 		
+		<div>
+			<a href="/">Home</a>
+		</div>
+		
 		<form:form action="removeLoan" method="post" modelAttribute="loan">
 			<table>
 				<tr>

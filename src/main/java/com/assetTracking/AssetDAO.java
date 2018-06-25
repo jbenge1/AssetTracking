@@ -20,7 +20,7 @@ public class AssetDAO {
 	private static final String PASS = "<Polevault18>";
 
 	private String query;
-	
+	java.sql.Date arbDate = java.sql.Date.valueOf("1992-10-25");
 	
 	
 	private final JdbcTemplate jdbcTemplate;
@@ -105,12 +105,14 @@ public class AssetDAO {
 			//get each individual row
 			Object[] temp = list.get(0).values().toArray();
 			Loan tempLoan = new Loan();
-			//create a new Employee object from it
+			
+			String tempEmpFirst = jdbcTemplate.queryForObject("select FirstName from Employee where ID = ?", new Object[] {(int)temp[1]}, String.class);
+			String tempEmpLast = jdbcTemplate.queryForObject("select LastName from Employee where ID = ?", new Object[] {(int)temp[1]}, String.class);
 			tempLoan.setId((int)temp[0]);
 			tempLoan.setEmployeeID((int)temp[1]);
 			tempLoan.setAssetID((int)temp[2]);
 			tempLoan.setStartDate((java.sql.Date)temp[3]);
-			//tempLoan.setEmployeeName(null);
+			tempLoan.setEmployeeName(tempEmpFirst + " " + tempEmpLast);
 			//add it then remove it from the list
 			retval.add(tempLoan);
 			list.remove(0);
@@ -164,31 +166,43 @@ public class AssetDAO {
 	 * @param loan
 	 * 		the loan to insert into the DB
 	 */
-	public boolean addLoan(Loan loan) {
-		query             = "insert into Loan values (?,?,?,?)";
+	public String addLoan(Loan loan) {
 		String checkEmp   = "select count(*) from Loan where EmployeeID = ?";
 		String checkAsset = "select count(*) from Loan where AssetID = ?";
 		
+
+		//=== Check to see that the dates we have entered make sense
+		if(loan.getStartDate().compareTo(loan.getEndDate()) >= 0 && !loan.getEndDate().equals(arbDate))
+			return "dateError";
+		//============================================
+		//=== Check to see we have records in the respective Employee and Asset tables
 		int count = jdbcTemplate.queryForObject("select count(*) from Employee where ID = ?",
 				new Object[] {loan.getEmployeeID()}, Integer.class);
 		if(count != 1)
-			return false;
+			return "noEmployee";
 		
 		count = jdbcTemplate.queryForObject("select count(*) from Asset where ID = ?", 
 				new Object[] {loan.getAssetID()}, Integer.class);
 		if(count != 1)
-			return false;
+			return "noAsset";
+		//============================================
 	    //=== Check to see if the record already exists
 		count = jdbcTemplate.queryForObject(checkEmp, new Object[] {loan.getEmployeeID()}, Integer.class);
 		if(count != 0)
-			return false;
+			return "employeeHasLoan";
 		count = jdbcTemplate.queryForObject(checkAsset,new Object[] {loan.getAssetID()}, Integer.class);
 		if(count != 0)
-			return false;
-		//=============================================
+			return "assetHasLoan";
+		//============================================
+		System.out.println("HERE");
+
+		query = "insert into Loan values (?,?,?,?)";
 		jdbcTemplate.update(query, new Object[]{loan.getEmployeeID(),loan.getAssetID(),loan.getStartDate(), loan.getEndDate()});
 		
-		return true;
+	
+		
+		return "loanList";
+		
 		
 	}//end addLoan()
 	

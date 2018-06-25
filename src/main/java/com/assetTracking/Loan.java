@@ -14,6 +14,13 @@ public class Loan {
 		this.endDate    = endDate;
 	}
 	
+	public Loan(int id, int employeeID, int assetID, java.sql.Date startDate, String employeeName) {
+	    this.id         = id;
+	    this.employeeID = employeeID;
+	    this.assetID    = assetID;
+	    this.startDate  = startDate;
+	}
+	
 	public Loan() {}
 
 	public String getEmployeeName() {

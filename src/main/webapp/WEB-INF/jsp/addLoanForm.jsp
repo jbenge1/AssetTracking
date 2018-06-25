@@ -10,7 +10,9 @@
 	
 	<body>
 		<h1>Add Loan Form</h1>
-		
+		<div>
+		<a href="/">Home</a>
+		</div>
 		<form:form action="addLoan" method="post" modelAttribute="loan" >
 			<table>
 				<tr>
@@ -23,11 +25,11 @@
 				</tr>
 				<tr>
 					<td>Start Date</td>
-					<td><form:input path="startDate"/></td>
+					<td><form:input path="startDate" value="YYYY-MM-DD"/></td>
 				</tr>
 				<tr>
 					<td>End Date</td>
-					<td><form:input path="endDate"/></td>
+					<td><form:input path="endDate" value='1992-10-25'/></td>
 				</tr>
 				<tr>
 					<td></td>
@@ -35,5 +37,8 @@
 				</tr>
 			</table>
 		</form:form>
+		<div>
+			*Note: If there is no end date, leave 1992-10-25, otherwise change this.
+		</div>
 	</body>
 </html>

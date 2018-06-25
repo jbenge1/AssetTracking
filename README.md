@@ -4,8 +4,5 @@ TODO:
 
 1.) Add default error page
 
-1.5) add in a home button to every page that takes us back to the index page :)
-
-2.) Implement logic to check that (Employee)(Asset)ID are both existing rows in the respective tables
-
+2.) Add in logic to check that dates are correct (as in end date is in the future of start date)
 3.) ...

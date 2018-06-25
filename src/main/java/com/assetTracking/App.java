@@ -8,10 +8,10 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 @SpringBootApplication
 public class App extends SpringBootServletInitializer {
     
-    @Override
+    /*@Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(App.class);
-    }
+    }*/
 
     public static void main(String[] argv) {
         SpringApplication.run(App.class,argv);

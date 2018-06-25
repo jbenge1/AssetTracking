@@ -11,6 +11,9 @@
 		
 	<body>
 		<h1>Add Employee Form</h1>
+		<div>
+		<a href="/">Home</a>
+		</div>
 		
 		<form:form action="addEmployee" method="post" modelAttribute="employee">
 			<table>

@@ -10,6 +10,10 @@
 <body>
 	<h1>All Loan Records</h1>
 	
+	<div>
+		<a href="/">Home</a>
+	</div>
+	
 	<table>
  			<tr>
 				 <td colspan="5"><h1>Person Information</h1></td>

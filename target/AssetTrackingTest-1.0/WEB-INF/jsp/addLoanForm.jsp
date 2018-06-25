@@ -10,7 +10,9 @@
 	
 	<body>
 		<h1>Add Loan Form</h1>
-		
+		<div>
+		<a href="/">Home</a>
+		</div>
 		<form:form action="addLoan" method="post" modelAttribute="loan" >
 			<table>
 				<tr>
