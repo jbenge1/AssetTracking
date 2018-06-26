@@ -1,24 +1,16 @@
 package com.assetTracking;
 
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @Repository
 public class AssetDAO {
-	// DB url
-	private static final String DB_URL = "jdbc:sqlserver://localhost:1433;databaseName=AssetTracking";
-	// credentials
-	private static final String USER = "SA";
-	private static final String PASS = "<Polevault18>";
-
+	
 	private String query;
 	java.sql.Date arbDate = java.sql.Date.valueOf("1992-10-25");
 	
@@ -127,11 +119,11 @@ public class AssetDAO {
 	 *            the emloyee object to add
 	 */
 	public void addEmployee(Employee employee) {
-		// Connection conn = null;
-		PreparedStatement stmt = null;
 		query = "insert into Employee values(?,?,?)";
-		System.out.println(employee);
-
+		jdbcTemplate.update(query, new Object[] {employee.getFirstName(),employee.getLastName(),employee.getEmailAddr()});
+		/*System.out.println(employee);
+		Connection conn = null;
+		PreparedStatement stmt = null;
 		try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
 			// register driver
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -153,7 +145,7 @@ public class AssetDAO {
 					stmt.close();
 			} catch (Exception e) {}
 		} // end finally block
-	}//end addEmployee()
+*/	}//end addEmployee()
 	
 
 	/**
